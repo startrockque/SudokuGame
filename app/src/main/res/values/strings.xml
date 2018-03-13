@@ -1,0 +1,35 @@
+<resources>
+    <string name="app_name">SudokuGame</string>
+
+    <!-- BOUTONS -->
+    <string name="btn_jouer">Jouer</string>
+    <string name="btn_nouvelle_partie">Nouvelle partie</string>
+    <string name="btn_continuer">Continuer</string>
+
+    <string name="toast">ToastText</string>
+
+    <!-- ChoixNiveauActivity -->
+    <string name="titre_choix_plateau">Choix du niveau</string>
+    <string name="txt_meilleur_temps">Meilleur temps</string>
+    <string name="txt_niveau">Niveau</string>
+    <string name="niveau_debutant">Débutant</string>
+    <string name="niveau_intermediaire">Intermédiaire</string>
+    <string name="niveau_expert">Expert</string>
+    <string name="niveau">Niveau %1$s </string>
+
+
+
+    <!-- JouerActivity -->
+    <string name="btn_ret">RET</string>
+    <string name="btn_effacer">X</string>
+    <string name="btn_9">9</string>
+    <string name="btn_8">8</string>
+    <string name="btn_7">7</string>
+    <string name="btn_6">6</string>
+    <string name="btn_5">5</string>
+    <string name="btn_4">4</string>
+    <string name="btn_3">3</string>
+    <string name="btn_2">2</string>
+    <string name="btn_1">1</string>
+    <string name="chronometre">Temps : %s</string>
+</resources>
