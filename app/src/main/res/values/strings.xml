@@ -32,4 +32,5 @@
     <string name="btn_2">2</string>
     <string name="btn_1">1</string>
     <string name="chronometre">Temps : %s</string>
+    <string name="btn_aleatoire">Mode aléatoire</string>
 </resources>

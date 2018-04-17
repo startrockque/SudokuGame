@@ -12,6 +12,7 @@ import com.roume.fabien.sudokugame.R;
 import java.io.IOException;
 
 import data.NiveauDAO;
+import outils.SudokuGenerateur;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     private NiveauDAO dao;
@@ -36,6 +37,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         } catch (IOException e) {
             Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
         }
+
+
     }
 
     private boolean baseNonExistante() {
@@ -61,6 +64,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 // Si on clique sur le bouton "Continuer"
                 Toast.makeText(this, getResources().getString(R.string.toast),Toast.LENGTH_SHORT).show();
                 break;
+            case R.id.btn_aleatoire:
+                // Si on clique sur le bouton "Mode aléatoire"
+                int[][] sudoku = SudokuGenerateur.getInstance().genererGrille();
+                imprimerSudoku(sudoku);
+                break;
+        }
+    }
+
+    private  void imprimerSudoku(int sudoku[][]){
+        for (int y = 0; y<9; y++){
+            for (int x = 0; x< 9; x++){
+                System.out.print(sudoku[x][y] + "|");
+            }
+            System.out.println();
         }
     }
 }
