@@ -5,14 +5,13 @@
     android:layout_height="match_parent"
     android:background="@color/fond_ecran_jeu">
 
-    <GridView
+
+    <vues.SudokuGrille
+        android:id="@+id/sudoku_grille"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-
-    </GridView>
-
-
-
+        android:layout_height="wrap_content"
+        android:numColumns="9"
+        android:horizontalSpacing="0dp"
+        android:verticalSpacing="0dp"/>
 
 </android.support.constraint.ConstraintLayout>

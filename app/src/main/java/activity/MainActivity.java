@@ -66,18 +66,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.btn_aleatoire:
                 // Si on clique sur le bouton "Mode aléatoire"
-                int[][] sudoku = SudokuGenerateur.getInstance().genererGrille();
-                imprimerSudoku(sudoku);
+                startActivity(new Intent(this, JouerAleatoireActivity.class));
+                /*overridePendingTransition(R.anim.right_to_center, R.anim.center_to_left);*/
                 break;
-        }
-    }
-
-    private  void imprimerSudoku(int sudoku[][]){
-        for (int y = 0; y<9; y++){
-            for (int x = 0; x< 9; x++){
-                System.out.print(sudoku[x][y] + "|");
-            }
-            System.out.println();
         }
     }
 }

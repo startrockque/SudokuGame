@@ -8,4 +8,7 @@ public class Case {
     private Integer solution;
     private Integer valeurActuelle;
     private boolean changeable;
+    private Ligne ligne;
+    private Colonne colonne;
+    private SousTableau sousTableau;
 }
