@@ -6,6 +6,7 @@ import android.view.View;
 public class ICellule extends View {
 
     private int value;
+    public boolean modifiable = true;
 
     public ICellule(Context context) {
         super(context);
@@ -16,8 +17,18 @@ public class ICellule extends View {
         super.onMeasure(widthMeasureSpec, widthMeasureSpec);
     }
 
+    public void setNotModifiable(){
+        modifiable = false;
+    }
+
     public void setValue(int n){
-        value = n;
+        if(modifiable)
+            value = n;
+        invalidate();
+    }
+
+    public void setInitValue(int value){
+        this.value = value;
         invalidate();
     }
 

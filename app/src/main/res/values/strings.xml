@@ -20,8 +20,8 @@
 
 
     <!-- JouerActivity -->
-    <string name="btn_ret">RET</string>
-    <string name="btn_effacer">X</string>
+    <string name="btn_ret">RETOUR</string>
+    <string name="btn_effacer">SUPPR</string>
     <string name="btn_9">9</string>
     <string name="btn_8">8</string>
     <string name="btn_7">7</string>

@@ -52,6 +52,21 @@ public class SudokuGenerateur {
         return sudoku;
     }
 
+    public int[][] cacherCellules( int[][] sudoku){
+        int i = 0;
+
+        while (i < 45) {
+            int x = aleatoire.nextInt(9);
+            int y = aleatoire.nextInt(9);
+
+            if(sudoku[x][y] != 0){
+                sudoku[x][y] = 0;
+                i++;
+            }
+        }
+        return sudoku;
+    }
+
     private void nettoyerGrille(int[][] sudoku){
         for (int y = 0; y < 9; y++){
             for (int x = 0; x < 9; x++){

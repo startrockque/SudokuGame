@@ -31,6 +31,8 @@ public class SudokuGrille extends GridView {
                 int y = position / 9;
 
                 colorerCases(x, y);
+
+                GameEngine.getInstance().setPositionSelectionnee(x,y);
             }
         });
     }

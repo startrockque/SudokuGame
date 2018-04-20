@@ -45,7 +45,8 @@ public class Cellule extends ICellule{
         Rect bounds = new Rect();
         mPaint.getTextBounds(String.valueOf(getValue()), 0, String.valueOf(getValue()).length(), bounds);
 
-        canvas.drawText(String.valueOf(getValue()), (getWidth() - bounds.width())/2, (getHeight() + bounds.height())/2, mPaint);
+        if (getValue()!= 0)
+            canvas.drawText(String.valueOf(getValue()), (getWidth() - bounds.width())/2, (getHeight() + bounds.height())/2, mPaint);
     }
 
 
