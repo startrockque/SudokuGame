@@ -12,7 +12,6 @@ import com.roume.fabien.sudokugame.R;
 
 import outils.BoiteAOutils;
 import outils.GameEngine;
-import outils.SudokuGenerateur;
 
 public class JouerAleatoireActivity extends AppCompatActivity implements View.OnClickListener{
     private Chronometer chronometre;
@@ -29,21 +28,11 @@ public class JouerAleatoireActivity extends AppCompatActivity implements View.On
 
         chronometre = findViewById(R.id.chronometre);
 
-        int[][] sudoku = SudokuGenerateur.getInstance().genererGrille();
-        GameEngine.getInstance().setSudoku(sudoku);
-        imprimerSudoku(sudoku);
+
+        GameEngine.getInstance().creerPlateau(this);
 
         lancerChrono();
 
-    }
-
-    private  void imprimerSudoku(int sudoku[][]){
-        for (int y = 0; y<9; y++){
-            for (int x = 0; x< 9; x++){
-                System.out.print(sudoku[x][y] + "|");
-        }
-            System.out.println();
-        }
     }
 
     @Override
