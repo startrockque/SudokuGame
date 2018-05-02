@@ -38,6 +38,8 @@ public class GameEngine {
 
     public void setNombre(int nombre) {
         if (xSelectionne != -1 && ySelectionne != -1)
-        plateau.setItem(xSelectionne, ySelectionne, nombre);
+            plateau.setItem(xSelectionne, ySelectionne, nombre);
+        plateau.verifierPartie();
+
     }
 }

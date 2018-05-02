@@ -1,11 +1,17 @@
 package vues;
 
 import android.content.Context;
+import android.widget.Toast;
+
+import outils.VerificateurDeSudoku;
 
 public class PlateauDeJeu {
     private Cellule[][] sudoku = new Cellule[9][9];
 
+    private Context context;
+
     public PlateauDeJeu(Context context){
+        this.context = context;
         for( int x= 0; x <9; x++){
             for(int y = 0; y < 9; y++){
                 sudoku[x][y] = new Cellule(context);
@@ -39,5 +45,17 @@ public class PlateauDeJeu {
 
     public void setItem(int x, int y, int nombre) {
         sudoku[x][y].setValue(nombre);
+    }
+
+    public void verifierPartie(){
+        int[][] sud = new int[9][9];
+        for(int x = 0; x<9; x++){
+            for(int y = 0; y<9; y++){
+                sud[x][y] = getPlateau()[x][y].getValue();
+            }
+        }
+        if (VerificateurDeSudoku.getInstance().verifierSudoku(sud)){
+            Toast.makeText(context, "sudoku terminé", Toast.LENGTH_SHORT).show();
+        }
     }
 }
