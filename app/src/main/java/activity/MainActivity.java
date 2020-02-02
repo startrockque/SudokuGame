@@ -9,13 +9,10 @@ import android.widget.Toast;
 
 import com.roume.fabien.sudokugame.R;
 
-import java.io.IOException;
-
-import data.NiveauDAO;
-import outils.SudokuGenerateur;
+import services.GererBDDService;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
-    private NiveauDAO dao;
+    private GererBDDService gererBDDService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,32 +20,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
-
-        dao = new NiveauDAO(this);
-        dao.open();
-        try {
-            if (baseNonExistante()) {
-                dao.peuplerLaBase(this);
-            } else {
-                //TODO retirer ce else et faitre proprement le test et initialisation de la base de données
-                dao.razBase();
-                dao.peuplerLaBase(this);
-            }
-        } catch (IOException e) {
-            Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
-        }
-
-
-    }
-
-    private boolean baseNonExistante() {
-        try {
-            // si la base existe, on n'aura pas d'erreur
-            dao.getNiveau(1);
-            return false;
-        } catch (Exception e) {
-            return true;
-        }
+        gererBDDService = new GererBDDService();
+        gererBDDService.initialiserBase(this);
     }
 
     @Override
