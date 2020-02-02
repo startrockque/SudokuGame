@@ -20,13 +20,15 @@ import java.util.List;
 import adapters.NiveauDTOAdapter;
 import data.NiveauDAO;
 import model.NiveauDTO;
+import services.GererBDDService;
 
 /**
  * Created by Fabien on 25/02/2018.
  */
 
-public class ChoixNiveauActivity extends AppCompatActivity implements View.OnClickListener{
-    private NiveauDAO dao;
+public class ChoixNiveauActivity extends AppCompatActivity implements View.OnClickListener {
+    private GererBDDService gererBDDService;
+
     private SparseArray<String> niveauxDeDifficulte;
     private Integer niveauDeDifficulte;
     private List<NiveauDTO> listeNiveaux = new ArrayList<>();
@@ -38,20 +40,17 @@ public class ChoixNiveauActivity extends AppCompatActivity implements View.OnCli
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.choix_niveau);
 
         iconeChargement = findViewById(R.id.icone_chargement);
         iconeChargement.setVisibility(View.VISIBLE);
 
+        gererBDDService = new GererBDDService();
         initialiserDifficulte();
-
-        dao = new NiveauDAO(this);
-        dao.open();
         getListeNiveauxDTO();
-
         initialiserListe();
+
         iconeChargement.setVisibility(View.GONE);
     }
 
@@ -59,13 +58,10 @@ public class ChoixNiveauActivity extends AppCompatActivity implements View.OnCli
         listView = findViewById(R.id.list_choix_niveau);
         adapter = new NiveauDTOAdapter(this, listeNiveaux);
         listView.setAdapter(adapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(getApplicationContext(), JouerActivity.class);
-                intent.putExtra("id", listeNiveaux.get(i).getId());
-                startActivity(intent);
-            }
+        listView.setOnItemClickListener((adapterView, view, i, l) -> {
+            Intent intent = new Intent(getApplicationContext(), JouerActivity.class);
+            intent.putExtra("id", listeNiveaux.get(i).getId());
+            startActivity(intent);
         });
     }
 
@@ -78,14 +74,14 @@ public class ChoixNiveauActivity extends AppCompatActivity implements View.OnCli
         ((TextView) findViewById(R.id.txt_difficulté_actuelle)).setText(niveauxDeDifficulte.get(niveauDeDifficulte));
     }
 
-    public void getListeNiveauxDTO(){
+    public void getListeNiveauxDTO() {
         listeNiveaux.clear();
-        listeNiveaux.addAll(dao.getTousNiveauxDTO(niveauDeDifficulte));
+        listeNiveaux.addAll(gererBDDService.getTousNiveaux(niveauDeDifficulte));
     }
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.btn_difficulté_moins:
                 iconeChargement.setVisibility(View.VISIBLE);
                 baisserDifficulte();
@@ -104,7 +100,7 @@ public class ChoixNiveauActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void augmenterDifficulte() {
-        if (niveauDeDifficulte < 3){
+        if (niveauDeDifficulte < 3) {
             niveauDeDifficulte++;
             getListeNiveauxDTO();
             ((TextView) findViewById(R.id.txt_difficulté_actuelle)).setText(niveauxDeDifficulte.get(niveauDeDifficulte));
@@ -112,7 +108,7 @@ public class ChoixNiveauActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void baisserDifficulte() {
-        if (niveauDeDifficulte > 1){
+        if (niveauDeDifficulte > 1) {
             niveauDeDifficulte--;
             getListeNiveauxDTO();
             ((TextView) findViewById(R.id.txt_difficulté_actuelle)).setText(niveauxDeDifficulte.get(niveauDeDifficulte));

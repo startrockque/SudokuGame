@@ -14,15 +14,16 @@ import com.roume.fabien.sudokugame.R;
 import data.NiveauDAO;
 import model.Niveau;
 import outils.BoiteAOutils;
+import services.GererBDDService;
 
 /**
  * Created by Fabien on 27/02/2018.
  */
+public class JouerActivity extends AppCompatActivity implements View.OnClickListener {
+    private GererBDDService gererBDDService
 
-public class JouerActivity extends AppCompatActivity implements View.OnClickListener{
     private Integer idNiveau;
     private Niveau niveau;
-    private NiveauDAO dao;
     private Chronometer chronometre;
     private long temps;
     private int tempsChrono;
@@ -36,6 +37,8 @@ public class JouerActivity extends AppCompatActivity implements View.OnClickList
         setContentView(R.layout.niveau);
 
         idNiveau = getIntent().getExtras().getInt("id");
+        gererBDDService = new GererBDDService();
+
         recupererNiveau();
 
         ((TextView) findViewById(R.id.txt_niveau)).setText(getResources().getString(R.string.niveau, String.valueOf(niveau.getId())));
@@ -44,27 +47,30 @@ public class JouerActivity extends AppCompatActivity implements View.OnClickList
         lancerChrono();
     }
 
+    /**
+     * Récupère le niveau demandé en BDD
+     */
     private void recupererNiveau() {
-        dao = new NiveauDAO(this);
-        dao.open();
-        niveau = dao.getNiveau(idNiveau);
+        niveau = gererBDDService.getNiveau(idNiveau);
     }
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.btn_joker:
                 relancerChrono();
                 break;
             case R.id.btn_pause:
                 stopperChrono();
-                dao.sauvegarderTemps(idNiveau, tempsChrono);
+                gererBDDService.sauvegarderTempsNiveau(idNiveau, tempsChrono);
                 break;
         }
     }
 
 
-
+    /**
+     * Lance le chronomètre du niveau
+     */
     private void lancerChrono() {
         temps = SystemClock.elapsedRealtime();
         tempsChrono = -1;
@@ -72,26 +78,32 @@ public class JouerActivity extends AppCompatActivity implements View.OnClickList
         chronometre.start();
         chronometre.setFormat(getResources().getString(R.string.chronometre));
         chronometre.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
-             public void onChronometerTick(Chronometer arg0) {
-                 if(tourne) {
-                     tempsChrono++;
-                 }
-                 chronometre.setText(BoiteAOutils.tempsEnString(tempsChrono));
-             }
-        }
-    );
+                                                     public void onChronometerTick(Chronometer arg0) {
+                                                         if (tourne) {
+                                                             tempsChrono++;
+                                                         }
+                                                         chronometre.setText(BoiteAOutils.tempsEnString(tempsChrono));
+                                                     }
+                                                 }
+        );
 
     }
 
+    /**
+     * Met en pause le chronomètre du niveau
+     */
     private void stopperChrono() {
         temps = SystemClock.elapsedRealtime();
         tourne = false;
         chronometre.stop();
     }
 
+    /**
+     * Relance le chronomètre après une pause
+     */
     private void relancerChrono() {
         long intervalOnPause = (SystemClock.elapsedRealtime() - temps);
-        chronometre.setBase( chronometre.getBase() + intervalOnPause );
+        chronometre.setBase(chronometre.getBase() + intervalOnPause);
         tourne = true;
         chronometre.start();
     }
