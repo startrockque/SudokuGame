@@ -19,6 +19,9 @@ public class JouerAleatoireActivity extends AppCompatActivity implements View.On
     private int tempsChrono;
     private boolean tourne;
 
+    // Créer un objet chronomètre qui se gère à part ?
+    // Comment afficher le temps du chrono et est ce que le temps sera bien compté ?
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
